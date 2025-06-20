@@ -1,0 +1,124 @@
+/* Общие стили и сброс */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #121212; /* Очень темный фон, как в примере */
+    color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Основной контейнер, который содержит все элементы */
+.main-container {
+    background-color: #1e1e1e; /* Чуть светлее фона */
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 960px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+}
+
+/* Сетка для двух блоков */
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Две колонки одинаковой ширины */
+    gap: 30px; /* Пространство между блоками */
+}
+
+/* Стиль для карточек-блоков */
+.option-card {
+    background-color: #2a2a2e; /* Цвет карточек, как в примере */
+    padding: 30px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column; /* Элементы внутри карточки идут друг под другом */
+}
+
+.option-card h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.option-card p {
+    line-height: 1.6;
+    flex-grow: 1; /* Этот параграф будет занимать все доступное место, отодвигая кнопку вниз */
+    margin-bottom: 20px;
+}
+
+/* Стили для элементов формы */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    color: #b0b0b0;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #5a99e0;
+    box-shadow: 0 0 0 3px rgba(90, 153, 224, 0.3);
+}
+
+/* Общий стиль для кнопок */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    color: #e0e0e0;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    background-color: transparent;
+    border: 1px solid #5a99e0; /* Синяя рамка, */
+    margin-top: auto; /* Прижимает кнопку к низу карточки */
+}
+
+.btn:hover {
+    background-color: rgba(90, 153, 224, 0.1);
+    border-color: #7ab3f0;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 800px) {
+    .options-grid {
+        grid-template-columns: 1fr; /* Одна колонка */
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+}

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание новой комнаты</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Создать новую комнату</h1>
+
+        <div class="option-card" style="margin: auto; max-width: 500px;">
+            <!-- Форма отправляет данные на тот же URL методом POST -->
+            <form method="POST" action="{% url 'create-room' %}">
+                
+                <!-- ОБЯЗАТЕЛЬНО! Защита от CSRF-атак. Без этого Django не примет POST-запрос. -->
+                {% csrf_token %}
+
+                <!-- Отображаем общие ошибки формы (например, "Пароли не совпадают") -->
+                {% if form.non_field_errors %}
+                    <div class="form-group" style="color: #ff6b6b; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <!-- Поле "Название комнаты" -->
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">Название комнаты</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.name.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Поле "Пароль" -->
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Пароль</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.password.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Поле "Подтвердите пароль" -->
+                <div class="form-group">
+                    <label for="{{ form.password_confirm.id_for_label }}">Подтвердите пароль</label>
+                    {{ form.password_confirm }}
+                    {% if form.password_confirm.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.password_confirm.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Поле "Макс. участников" -->
+                <div class="form-group">
+                    <label for="{{ form.max_users.id_for_label }}">Максимальное количество участников</label>
+                    {{ form.max_users }}
+                    {% if form.max_users.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.max_users.errors }}</div>{% endif %}
+                </div>
+
+                <!-- Поле "Алгоритм шифрования" (будет отрисовано как <select>) -->
+                <div class="form-group">
+                    <label for="{{ form.encryption_algorithm.id_for_label }}">Алгоритм шифрования</label>
+                    {{ form.encryption_algorithm }}
+                    {% if form.encryption_algorithm.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.encryption_algorithm.errors }}</div>{% endif %}
+                </div>
+
+                <button type="submit" class="btn" style="margin-top: 20px;">Создать комнату</button>
+            </form>
+            <a href="{% url 'landing_page' %}" style="text-align: center; margin-top: 20px; color: #aaa; text-decoration: none;">Вернуться на главную</a>
+        </div>
+    </div>
+</body>
+</html>

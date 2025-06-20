@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Название проекта</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Название проекта</h1>
+
+        <div class="options-grid">
+            <!-- Блок для создания комнаты -->
+            <div class="option-card create-card">
+                <h2>Создать новую комнату</h2>
+                <p>
+                    Создайте свою зашифрованную комнату для общения, к которой могут присодениться другие пользователи по вашему паролю
+                    
+                </p>
+                <a href="{% url 'create-room' %}" class="btn">Создать комнату</a>
+            </div>
+
+            <!-- Блок для присоединения к комнате -->
+            <div class="option-card join-card">
+    <h2>Присоединиться к комнате</h2>
+    <p>
+        Введите данные для входа в существующую комнату.
+    </p>
+    <!-- Вывод сообщения об ошибках -->
+    {% if messages %}
+        <div class="form-group" style="color: #ff6b6b; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+
+    <!-- Форма входа в комнату -->
+    <form action="{% url 'chat_room' room_name='example-room-name' %}" method="POST">
+        {% csrf_token %} <!-- ОБЯЗАТЕЛЬНО для POST-запросов! -->
+        
+        <div class="form-group">
+            <label for="room-name">Название комнаты</label>
+            <input type="text" id="room-name" name="room-name" required>
+        </div>
+        <div class="form-group">
+            <label for="username">Ваше имя</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="room-password">Пароль комнаты</label>
+            <input type="password" id="room-password" name="room-password" required>
+        </div>
+        <button type="submit" class="btn">Войти в комнату</button>
+    </form>
+</div>
+        </div>
+    </div>
+</body>
+</html>
