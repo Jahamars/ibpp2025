@@ -12,9 +12,20 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+from django.core.exceptions import ImproperlyConfigured
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
+env_path = os.path.join(BASE_DIR, '.env')
+is_loaded = load_dotenv(dotenv_path=env_path)
+# -- Отладка env --
+if is_loaded:
+
+    print(f"--- .env file loaded successfully from: {env_path} ---")
+else:
+    print(f"!!! WARNING: .env file not found at path: {env_path} !!!")
+    raise ImproperlyConfigured(f"Configuration file (.env) not found at the specified path: {env_path}")
+# --- КОНЕЦ ОТЛАДОЧНОГО БЛОКА ---
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -26,8 +37,10 @@ DEBUG = os.getenv('DEBUG', '0') == '1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+    #'.pinggy.link',
+    #'localhost',       
+    #'127.0.0.1',       
 
 # Application definition
 
@@ -86,6 +99,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+        
     }
 }
 
