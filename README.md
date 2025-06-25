@@ -17,7 +17,7 @@
     python -m venv .venv
     # Для Windows
     .venv\Scripts\activate
-    # Для MacOS/Linux
+    # Для Linux
     source .venv/bin/activate
     ```
 
@@ -27,11 +27,10 @@
     ```
 
 4.  **Настройте переменные окружения:**
-    *   Скопируйте файл-шаблон: `cp .env.example .env` (для MacOS/Linux) или `copy .env.example .env` (для Windows).
+    *   Скопируйте файл-шаблон:  `copy .env.example .env` (для Windows).
     *   Откройте файл `.env` и впишите ваши данные для `SECRET_KEY` и подключения к базе данных PostgreSQL (`DB_NAME`, `DB_USER`, `DB_PASSWORD`).
 
 5.  **Настройте базу данных PostgreSQL:**
-    *   Убедитесь, что у вас установлен и запущен PostgreSQL.
     *   Создайте базу данных и пользователя с теми же именами и паролем, которые вы указали в файле `.env`.
 
 6.  **Примените миграции для создания таблиц в БД:**
