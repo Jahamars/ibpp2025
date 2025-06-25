@@ -2,7 +2,13 @@ from django import forms
 from .models import Room
 
 class RoomCreationForm(forms.ModelForm):
-    # Добавляем поле для подтверждения пароля, которого нет в модели
+
+    username = forms.CharField(
+        label="Ваше имя", 
+        max_length=100,
+        help_text="Это имя будет отображаться в чате."
+    )
+    # Поле для подтверждения пароля
     password_confirm = forms.CharField(
         label="Подтвердите пароль", 
         widget=forms.PasswordInput
@@ -10,14 +16,12 @@ class RoomCreationForm(forms.ModelForm):
 
     class Meta:
         model = Room
-        # Указываем, какие поля из модели Room нужно показать в форме
         fields = ['name', 'password', 'password_confirm', 'max_users', 'encryption_algorithm']
-        # Используем виджеты, чтобы сделать поля ввода красивее или функциональнее
         widgets = {
             'password': forms.PasswordInput(),
         }
 
-    # Дополнительная проверка: пароли должны совпадать
+    # Проверка паролей
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")

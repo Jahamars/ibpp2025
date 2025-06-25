@@ -79,11 +79,19 @@ WSGI_APPLICATION = 'chatrooms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',    # Имя БД
+        'USER': 'postgres',           # Имя пользователя БД
+        'PASSWORD': 'admin',    
+        'HOST': 'localhost',                # или '127.0.0.1', или IP-адрес вашего сервера БД
+        'PORT': '5432',                     
+
+        # ---  Кодировка, потому что POstgre всегда косячит с кодировкой---
+        'OPTIONS': {
+            'client_encoding': 'UTF8',
+        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

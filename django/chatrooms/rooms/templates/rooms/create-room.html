@@ -30,6 +30,12 @@
                     {{ form.name }}
                     {% if form.name.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.name.errors }}</div>{% endif %}
                 </div>
+                <!-- Поле "Имя" -->
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Ваше имя</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}<div style="color: #ff6b6b; font-size: 0.9em; margin-top: 5px;">{{ form.username.errors }}</div>{% endif %}
+                </div>
 
                 <!-- Поле "Пароль" -->
                 <div class="form-group">

@@ -21,28 +21,26 @@ def create_room_view(request):
         # Если форма была отправлена (метод POST)
         form = RoomCreationForm(request.POST)
         if form.is_valid():
-            # 1. Данные корректны. Создаем объект Room, но пока не сохраняем в БД.
+            #1. Дбавляем имя пользователя в форму
+            username = form.cleaned_data['username']
             room = form.save(commit=False)
-            
             # 2. Хешируем пароль перед сохранением
             room.password = make_password(form.cleaned_data['password'])
-            
             # 3. Генерируем ключ шифрования
             room.encryption_key = generate_encryption_key(room.encryption_algorithm)
             
-            # 4. Назначаем модератора (если пользователи авторизованы)
+            # 4. Назначаем модератора (TO Do)
             # if request.user.is_authenticated:
             #     room.moderator = request.user
 
-            # 5. Теперь сохраняем комнату в БД
+            # 5. сохранение в БД
             room.save()
             
-            # 6. Перенаправляем пользователя в новую комнату
-            # Пока просто перенаправим на главную, потом - в чат
+            # 7. "ЛОГИНИМ" ПОЛЬЗОВАТЕЛЯ - сохраняем его имя в сессию
+            request.session['username'] = username
             return redirect('chat_room', room_name=room.name) # 'chat_room' - имя URL
 
     else:
-        # Если страница просто открыта (метод GET)
         form = RoomCreationForm()
 
     # Отображаем страницу, передавая в нее пустую или заполненную форму
@@ -57,15 +55,21 @@ def join_room_view(request):
         
         try:
             room = Room.objects.get(name=room_name)
+
+
             if check_password(password, room.password): # Проверяем хешированный пароль
+
                 request.session['username'] = username # Сохраняем имя в сессию
+
                 return redirect('chat_room', room_name=room.name)
             else:
                 # Обработка ошибки "неверный пароль"
                 pass
         except Room.DoesNotExist:
-            # Обработка ошибки "комната не найдена"
-            pass
+               # Обработка ошибки "комната не найдена"
+           
+            messages.error(request, 'Неверное название комнаты или пароль.')
+            return redirect('landing_page') # Возвращаем на главную
     # Если что-то пошло не так, возвращаем на главную
     return redirect('landing_page') # Предполагается, что у вас есть URL с именем 'landing_page'
 # View для главной страницы (index.html)

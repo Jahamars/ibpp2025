@@ -22,13 +22,13 @@
                 <a href="{% url 'create-room' %}" class="btn">Создать комнату</a>
             </div>
 
-            <!-- Блок для присоединения к комнате -->
             <div class="option-card join-card">
     <h2>Присоединиться к комнате</h2>
     <p>
         Введите данные для входа в существующую комнату.
     </p>
-    <!-- Вывод сообщения об ошибках -->
+
+    <!-- Выводим сообщения об ошибках, если они есть -->
     {% if messages %}
         <div class="form-group" style="color: #ff6b6b; background: rgba(255, 107, 107, 0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px;">
             {% for message in messages %}
@@ -37,11 +37,9 @@
         </div>
     {% endif %}
 
-
     <!-- Форма входа в комнату -->
-    <form action="{% url 'chat_room' room_name='example-room-name' %}" method="POST">
-        {% csrf_token %} <!-- ОБЯЗАТЕЛЬНО для POST-запросов! -->
-        
+    <form action="{% url 'join-room' %}" method="POST">
+        {% csrf_token %}
         <div class="form-group">
             <label for="room-name">Название комнаты</label>
             <input type="text" id="room-name" name="room-name" required>
