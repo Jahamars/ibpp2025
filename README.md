@@ -8,7 +8,7 @@
 
 1.  **Клонируйте репозиторий:**
     ```bash
-    git clone https://.../ваш-репозиторий.git
+    git clone https://.../ib-project.git
     cd ваш-репозиторий
     ```
 
