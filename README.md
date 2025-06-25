@@ -4,7 +4,7 @@
 
 1.  Клонируйте репозиторий:
     ```bash
-    git clone https://github.com/Jahamars/ibpp2025.git
+    git clone https://github.com/Misha4em/ib_project.git
     ```
 
 2.  Создайте и активируйте виртуальное окружение:
