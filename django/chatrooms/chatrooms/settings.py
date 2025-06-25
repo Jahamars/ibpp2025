@@ -11,17 +11,18 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5ryzq=0cdxwvc)jd^-37ydqs$wo@%@e_-^g%_-e$m=m_%_(+ko'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
+DEBUG = os.getenv('DEBUG', '0') == '1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -79,17 +80,12 @@ WSGI_APPLICATION = 'chatrooms.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',    # Имя БД
-        'USER': 'postgres',           # Имя пользователя БД
-        'PASSWORD': 'admin',    
-        'HOST': 'localhost',                # или '127.0.0.1', или IP-адрес вашего сервера БД
-        'PORT': '5432',                     
-
-        # ---  Кодировка, потому что POstgre всегда косячит с кодировкой---
-        'OPTIONS': {
-            'client_encoding': 'UTF8',
-        }
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 
