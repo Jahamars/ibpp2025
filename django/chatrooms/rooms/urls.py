@@ -10,7 +10,10 @@ urlpatterns = [
 
     
     path('join/', views.join_room_view, name='join-room'),
-
+    # Удаление комнаты, переход
+    path('room/<str:room_name>/delete/', views.delete_room_view, name='delete-room'),
+    # Путь для выхода из комнаты
+    path('room/<str:room_name>/leave/', views.leave_room_view, name='leave-room'),
     # Путь для самой комнаты чата (например, http://127.0.0.1:8000/room/test-room/)
     path('room/<str:room_name>/', views.chat_room_view, name='chat_room'),
 ]

@@ -31,3 +31,9 @@ class RoomCreationForm(forms.ModelForm):
             raise forms.ValidationError("Пароли не совпадают.")
         
         return cleaned_data
+class RoomUpdateForm(forms.Form):
+    new_password = forms.CharField(
+        label="Новый пароль", 
+        widget=forms.PasswordInput(attrs={'placeholder': 'Введите новый пароль'}),
+        required=True
+    )   

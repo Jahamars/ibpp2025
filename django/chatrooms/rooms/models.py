@@ -9,9 +9,9 @@ import uuid # Для генерации уникальных имен, если 
 class Room(models.Model):
     # Настройки, которые задает пользователь
     name = models.CharField(max_length=100, unique=True, verbose_name="Название комнаты")
-    password = models.CharField(max_length=128, verbose_name="Пароль (хешированный)") # Никогда не храните пароль в открытом виде!
+    password = models.CharField(max_length=128, verbose_name="Пароль (хешированный)") 
     max_users = models.PositiveIntegerField(default=10, verbose_name="Макс. участников")
-
+    moderator_username = models.CharField(max_length=150, blank=True)
 
     # Выбор алгоритма шифрования
     ALGORITHM_CHOICES = [
@@ -31,7 +31,6 @@ class Room(models.Model):
     # expires_at = models.DateTimeField(...) # Здесь можно добавить поле для времени жизни комнаты
 
     # КЛЮЧ ШИФРОВАНИЯ! Хранится только на сервере.
-    # Мы будем заполнять его программно, не через форму.
     encryption_key = models.CharField(max_length=256, blank=True)
 
 
@@ -40,6 +39,7 @@ class Message(models.Model):
     username = models.CharField(max_length=100) # Имя автора сообщения
     content = models.TextField() # Текст сообщения (зашифрованный)
     timestamp = models.DateTimeField(auto_now_add=True) # Время отправки
+    moderator_username = models.CharField(max_length=100, blank=True)
 
 
     def __str__(self):

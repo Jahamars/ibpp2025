@@ -1,0 +1,106 @@
+/* static/css/chat-style.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #36393f; /* Основной фон, как у Discord */
+    color: #dcddde;
+    overflow: hidden; /* Запрещаем прокрутку body */
+}
+
+.chat-layout {
+    display: grid;
+    /* Левая колонка, центральная (занимает все оставшееся место), правая колонка */
+    grid-template-columns: 240px 1fr 240px; 
+    height: 100vh;
+}
+
+/* --- Левая колонка --- */
+.sidebar-left {
+    background-color: #2f3136;
+    display: flex;
+    flex-direction: column;
+}
+.room-info-header {
+    padding: 20px 15px;
+    border-bottom: 1px solid #202225;
+}
+.room-info-header h3 { font-size: 1.2em; }
+.room-info-header p { color: #b9bbbe; font-size: 0.9em; }
+
+.user-list { padding: 15px; }
+.user-list h4 { color: #8e9297; font-size: 0.8em; margin-bottom: 10px; }
+.user-item { display: flex; align-items: center; padding: 8px; border-radius: 4px; margin-bottom: 5px; cursor: pointer; }
+.user-item:hover { background-color: #3a3c43; }
+.user-item.moderator { font-weight: bold; }
+.user-avatar { width: 32px; height: 32px; background-color: #7289da; border-radius: 50%; margin-right: 10px; }
+.moderator-badge { margin-left: auto; }
+
+
+/* --- Центральная часть (Чат) --- */
+.chat-main {
+    display: flex;
+    flex-direction: column;
+    background-color: #36393f;
+}
+.messages-container {
+    flex-grow: 1;
+    overflow-y: auto; /* Полоса прокрутки только здесь! */
+    padding: 20px;
+}
+.message { display: flex; margin-bottom: 20px; }
+.message-content { margin-left: 20px; }
+.message-header .author { font-weight: bold; color: white; margin-right: 10px; }
+.message-header .timestamp { font-size: 0.8em; color: #72767d; }
+.message-content p { line-height: 1.4; }
+
+.message-input-form {
+    padding: 0 20px 20px 20px;
+}
+.message-input-form form { display: flex; }
+.message-input-form input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: #40444b;
+    color: #dcddde;
+    border-radius: 8px;
+    font-size: 1em;
+}
+.message-input-form input:focus { outline: none; }
+/* Кнопка отправки - тут можно использовать иконку */
+.message-input-form button { display: none; }
+
+
+/* --- Правая колонка --- */
+.sidebar-right {
+    background-color: #2f3136;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+}
+.settings-panel {
+    flex-grow: 1;
+}
+.settings-panel h4, .settings-panel h5 { margin-bottom: 15px; }
+.setting-item { margin-bottom: 10px; }
+.setting-item label { color: #8e9297; display: block; }
+
+.btn-danger, .btn-secondary {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.btn-danger { background-color: #d9534f; color: white; }
+.btn-danger:hover { background-color: #c9302c; }
+.btn-secondary { background-color: #4f545c; color: white; }
+.btn-secondary:hover { background-color: #43474e; }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Комната: {{ room.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/chat-style.css' %}">
+</head>
+<body>
+
+<div class="chat-layout">
+
+    <!-- ЛЕВАЯ КОЛОНКА: ИНФО О КОМНАТЕ И УЧАСТНИКИ -->
+    <aside class="sidebar-left">
+        <div class="room-info-header">
+            <h3>{{ room.name }}</h3>
+            <p>#{{ room.get_encryption_algorithm_display }}</p>
+        </div>
+
+        <div class="user-list">
+            <h4>УЧАСТНИКИ — {{ participants_count }}</h4> 
+            
+            <div class="user-item moderator"> <!-- Пример модератора -->
+                <span class="user-avatar"></span>
+                <span>{{ request.session.username }} (Вы)</span>
+                <span class="moderator-badge">👑</span>
+            </div>
+            
+             <div class="user-item"> <!-- Пример обычного пользователя -->
+                {% comment %} <span class="user-avatar"></span>
+                <span>AnotherUser</span>  {% endcomment %}
+            </div>
+        </div>
+    </aside>
+
+    <!-- ЦЕНТРАЛЬНАЯ ЧАСТЬ: ЧАТ -->
+    <main class="chat-main">
+        <div class="messages-container" id="messages-container">
+            <!-- Сообщения будут рендериться здесь -->
+            {% for message in messages %}
+                <div class="message">
+                    <span class="user-avatar"></span>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="author">{{ message.username }}</span>
+                            <span class="timestamp">{{ message.timestamp|date:"d.m.Y H:i" }}</span>
+                        </div>
+                        <p>{{ message.content }}</p> <!-- TODO: Расшифровать! -->
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="message-input-form">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="content" placeholder="Отправить сообщение в #{{ room.name }}" autocomplete="off">
+                <button type="submit">Отправить</button>
+            </form>
+        </div>
+    </main>
+
+    <!-- ПРАВАЯ КОЛОНКА: НАСТРОЙКИ И ДЕЙСТВИЯ -->
+    <aside class="sidebar-right">
+        <div class="settings-panel">
+            <h4>Настройки комнаты</h4>
+            <div class="setting-item">
+                <label>Макс. участников:</label>
+                <span>{{ participants_count }} / {{ room.max_users }}</span>
+            </div>
+            
+            <!-- TODO: Сделать эту форму видимой только для модератора -->
+            <div class="moderator-actions">
+                <h5>Действия модератора</h5>
+                <form method="POST" class="setting-item">
+                {% csrf_token %}
+                <label for="{{ update_form.new_password.id_for_label }}">Сменить пароль</label>
+                {{ update_form.new_password }}
+                    <button type="submit" class="btn-secondary" style="margin-top: 5px; width: 100%;">Применить</button>
+                </form>
+                <form method="POST" action="{% url 'delete-room' room.name %}"> 
+                    {% csrf_token %}
+                    <button type="submit" class="btn-danger">Удалить комнату</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="actions-panel">
+             <form method="POST" action="{% url 'leave-room' room.name %}"> 
+                {% csrf_token %}
+                <button type="submit" class="btn-secondary">Покинуть комнату</button>
+            </form>
+        </div>
+    </aside>
+
+</div>
+
+</body>
+</html>
